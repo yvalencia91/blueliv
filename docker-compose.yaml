@@ -1,0 +1,51 @@
+version: "3.3"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+
+  apm:
+    image: docker.elastic.co/apm/apm-server:7.15.0
+    ports:
+      - "8200:8200"
+    environment:
+      - "strict.perms=false"
+      - "-E output.elasticsearch.hosts=['elasticsearch:9200']"
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.1
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    networks:
+      - elastic
+
+  api:
+    image: blueliv-api:1.1
+    ports:
+      - "8000:8000"
+    environment:
+      - APM_HOST=http://apm
+    depends_on:
+      - apm
+      - elasticsearch
+      - kibana
+    networks:
+      - elastic
+
+networks:
+  elastic:

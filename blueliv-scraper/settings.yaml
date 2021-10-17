@@ -1,0 +1,22 @@
+authentication:
+  headers:
+    Content-Type: application/json
+  endpoint:
+    schema: http
+    host: ${HOST}:8000
+    login: /api/v1/login
+    threat: /api/v1/threat
+  token:
+    access_token: None
+    refresh_token: None
+  basic:
+    username: yohan
+    password: ${PASSWD}
+target:
+  url: https://www.tripadvisor.com/SearchForums?q=threat
+  headers:
+    referer: https://www.tripadvisor.com/RegistrationController?flow=sign_out&pid=39780&returnTo=%2FSearchForums%3Fq%3Dthreat&fullscreen=true
+    user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36
+    accept-language: es-ES,es;q=0.9,en;q=0.8
+logger:
+  level: INFO

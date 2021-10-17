@@ -1,0 +1,7 @@
+secret_key: ${KEY}
+logger:
+  level: INFO
+apm:
+  SERVICE_NAME: blueliv-test
+  SERVER_URL: ${HOST}:8200
+  ENVIRONMENT: production
