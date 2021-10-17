@@ -18,6 +18,9 @@ services:
     image: docker.elastic.co/apm/apm-server:7.15.0
     ports:
       - "8200:8200"
+    depends_on:
+      - elasticsearch
+      - kibana
     environment:
       - "strict.perms=false"
       - "-E output.elasticsearch.hosts=['elasticsearch:9200']"

@@ -3,5 +3,5 @@ logger:
   level: INFO
 apm:
   SERVICE_NAME: blueliv-test
-  SERVER_URL: ${HOST}:8200
+  SERVER_URL: ${APM_HOST}:8200
   ENVIRONMENT: production
